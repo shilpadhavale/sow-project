@@ -17,6 +17,15 @@ class Settings(BaseSettings):
     ENV: str = "development"
     PORT: int = 8000
     ACS_CONNECTION_STRING: Optional[str] = None
+    
+    # OpenAI Configuration
+    OPENAI_API_KEY: Optional[str] = None
+    OPENAI_MODEL: str = "gpt-4o-mini"
+    CALL_LLM: bool = True
+    
+    # Optional LLM tuning
+    MAX_CHARS_FOR_SINGLE_CALL: int = 4000
+    FALLBACK_TO_CHUNK: bool = True
 
     # pydantic v2 / pydantic-settings uses `model_config` for settings
     model_config = {"env_file": ".env"}

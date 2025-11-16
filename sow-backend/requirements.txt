@@ -6,3 +6,9 @@ pydantic
 requests
 pytest
 pydantic-settings
+python-dotenv
+python-docx
+PyPDF2
+openai
+regex
+debugpy

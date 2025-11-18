@@ -335,6 +335,20 @@ def process_all_single_call():
                         }
                     }
 
+            # --- Duplicate detection logic ---
+            findings = analysis.get("findings", [])
+            unique = []
+            seen = set()
+            for f in findings:
+                # Use original_text and compliance_status as duplicate key
+                key = (f.get("original_text", "").strip(), f.get("compliance_status", ""))
+                if key not in seen:
+                    unique.append(f)
+                    seen.add(key)
+            if len(unique) < len(findings):
+                logging.info(f"Filtered {len(findings) - len(unique)} duplicate findings.")
+            analysis["findings"] = unique
+
             # write output JSON
             out_file = OUT_DIR / f"{sow.stem}__{prompt_name}.json"
             out_file.write_text(json.dumps(analysis, indent=2, ensure_ascii=False), encoding="utf-8")
